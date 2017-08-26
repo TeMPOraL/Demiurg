@@ -5,9 +5,9 @@ A point&click psychodelic adventure written for Global Game Jam 2011. Rated 2^{n
 
 * Screenshots
 
-[[file:press/media.png]]
-
 [[file:press/media2.png]]
+
+[[file:press/media.png]]
 
 * Installation
 
