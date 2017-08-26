@@ -1,0 +1,84 @@
+* 00:02 - The Game
+
+** Development of tech-prototype
+The goal is to prepare the basic code for the gameplay we want before art people get up and start working ;).
+
+We should be able to do:
+*** TODO Pick stuff up
+	By clicking mouse on them => they go to inventory.
+
+	Just created inventory and displayed a white box ;).
+*** TODO +Combine stuff+
+	In the inventory - by clicking on an item, and then on another ;)
+
+	I've just done the easy part - methods for items, eql specializers and combination ;).
+
+	Idea for a macro:
+	(define-item-combinations
+	   (:amonium-nitrate and :fuel-oil gives :anfo "You've just made a powerful explosive") ;; A <-> B
+	   (:detonator applied-to :anfo gives :bomb "Hehehe") ;; A -> B
+
+
+	Just implemented mouse-over-item-p for user-item interaction.
+
+	Now I'm going to implement item selection / deselection.
+	Selection done, time for deselection/combining.
+
+	Removing item done.
+
+*** TODO Walk around locations
+	By clicking at proper places
+*** DONE Play sounds from WAVs
+	(or OGGs, or MP3s - don't care, as long as it's an external file
+*** DONE Load and display big PNGs / JPGs
+	For backgrounds.
+
+	Ok, it seems to be able to load and display large (> 1k x 1k) JPGs.
+	Eventual problems touch pathnames.
+*** TODO Replace mouse cursor with something custom.
+	Removing the cursor was easy - (sdl:show-cursor nil).
+
+
+** The Animation Things
+*** DONE Add loading of PNGs / JPGs as textures.
+	We can now batch-load animations!
+*** DONE Ensure that we have transparency working.
+	(more-less...)
+*** TODO Create animation abstraction.
+**** DONE Load framerate from somewhere.
+	 From c-tor ;).
+**** TODO Add finer control over animation
+	 - frame selection
+	 - looping / not looping
+
+*** TODO Effects stack (?)
+We need to handle somehow effects such as:
+- Fade-in / Fade-out using alpha-blending
+- Color change
+
+Maybe we should add some effects stack?
+
+** The Closest Things
+*** DONE Parallax intro for location A
+We can do this by offsetting the drawing using glTranslate with precise number LERPed with regards to passing time.
+*** DONE Waving flags for location A
+We should measure the exact point to place the flags.
+An option to reverse the image drawn might actually be useful.
+*** TODO Find a way to measure GFX and SFX memory usage
+*** DONE Add ability to start animation from a random (ie. any) offset -> so that things won't look synchronized.
+
+** Minor issues
+
+*** TODO It seems that OpenAL eats lots of memory each time music is loaded and doesn't really bother to free it. Fix that.
+
+** Notes
+*** OpenAL and memory usage.
+To reduce memory footprint we can split music file into several pieces and keep only two loaded at the same time.
+When transition occurs, we discard the older part, and load next part instead.
+
+*** SDL/OpenGL memory footprint
+There should be a way to measure how much RAM and video memory is allocated.
+And basically, the most important thing would be to discover how to discard unused textures and SDL surfaces.
+
+*** LERP
+We can replace lerp with some kind of exponential-something-something that will tend to have smooth transitions at the ends.
